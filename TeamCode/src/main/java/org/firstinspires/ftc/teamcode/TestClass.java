@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class TestClass extends LinearOpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
-
+    private DcMotor motorArm;
     private Servo armServo;
 
     private static final double ARM_RETRACTED_POSITION = 0.2;
@@ -23,6 +23,7 @@ public class TestClass extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
+        motorArm = hardwareMap.dcMotor.get("motorArm");
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
@@ -33,6 +34,8 @@ public class TestClass extends LinearOpMode {
         while(opModeIsActive()) {
             motorLeft.setPower(-gamepad1.left_stick_y);
             motorRight.setPower(-gamepad1.right_stick_y);
+            motorArm.setPower(-gamepad2.right_stick_y);
+
 
             if(gamepad2.a) {
                 armServo.setPosition(ARM_EXTENDED_POSITION);
@@ -40,6 +43,7 @@ public class TestClass extends LinearOpMode {
             if(gamepad2.b) {
                 armServo.setPosition(ARM_RETRACTED_POSITION);
             }
+
             idle();
         }
     }
